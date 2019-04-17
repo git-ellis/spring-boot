@@ -1,0 +1,4 @@
+# 多環境配置 也可以使用java -jar xxx.jar --spring.profiles.active=dev, prod
+spring:
+  profiles:
+    active: dev # 可以放多個設定檔(db)

@@ -9,20 +9,26 @@ public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    @Column(name = "name", columnDefinition = "text")
+    @Column(name = "name")
     private String name;
-    @Column(name = "email", columnDefinition = "text")
+    @Column(name = "gender")
+    private String gender;
+    @Column(name = "email")
     private String email;
-    @Column(name = "password", columnDefinition = "text")
+    @Column(name = "password")
     private String password;
+    @Column(name = "age")
+    private int age;
 
     public Client() {
     }
 
-    public Client(String name, String email, String password) {
+    public Client(String name, String gender, String email, String password, int age) {
         this.name = name;
+        this.gender = gender;
         this.email = email;
         this.password = password;
+        this.age = age;
     }
 
     public long getId() {
@@ -41,6 +47,14 @@ public class Client {
         this.name = name;
     }
 
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -55,5 +69,13 @@ public class Client {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -53,8 +54,15 @@ public class ClientController {
     }
 
     @PostMapping("/save")
-    public String addClient(Client client) {
+    public String addClient(Client client, RedirectAttributes ra) {
+        long id = client.getId();
         Client c = cs.save(client);
+        if (id == 0)
+            ra.addFlashAttribute("opTitle", "新增用戶");
+        else
+            ra.addFlashAttribute("opTitle", "修改用戶");
+        ra.addFlashAttribute("opMsg", client.getName() + "成功");
+
         return "redirect:getAll"; // 會自動加前墜
     }
 }

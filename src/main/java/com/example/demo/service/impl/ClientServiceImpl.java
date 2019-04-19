@@ -26,12 +26,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Client insert(Client client) {
-        return cr.save(client);
-    }
-
-    @Override
-    public Client update(Client client) {
+    public Client save(Client client) {
         return cr.save(client);
     }
 

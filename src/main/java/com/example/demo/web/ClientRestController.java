@@ -53,13 +53,13 @@ public class ClientRestController {
                          @RequestParam String gender,
                          @RequestParam int age
     ) {
-        return cs.insert(new Client(name, gender, email, password, age));
+        return cs.save(new Client(name, gender, email, password, age));
     }
 
 
     @PutMapping("/client")
     public Client update(Client client) {
-        return cs.update(client);
+        return cs.save(client);
     }
 
     @PutMapping("/client/jpql")

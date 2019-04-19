@@ -9,9 +9,7 @@ public interface ClientService {
 
     Client findById(long id);
 
-    Client insert(Client client);
-
-    Client update(Client client);
+    Client save(Client client);
 
     void delete(long id);
 

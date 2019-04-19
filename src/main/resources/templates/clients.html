@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}">title</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}" href="../static/css/bootstrap.css">
+    <script th:src="@{/js/bootstrap.js}" src="../static/js/bootstrap.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <p class="text-left">用戶列表</p>
+            <p class="text-right">
+                <a class="btn btn-primary" th:href="@{/client/input}">新增</a>
+                <a class="btn btn-default" href="">刪除</a>
+            </p>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Gender</th>
+                        <th>age</th>
+                        <th>Email</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <!--
+                     index: 索引(0)
+                     count: 記數(1)
+                     size: 總比數
+                     odd/even (true/false)
+                     first/last (true/false)
+                 -->
+                <tbody>
+                    <tr th:each="client,iterStat:${clients}"
+                        th:class="${iterStat.even} ? bg-success : bg-light">
+                        <td th:text="${client.id}">1</td>
+                        <!--                            <td><a th:text="${client.name}" th:href="@{'/client/getOne/' + ${client.id}}">Test</a></td>-->
+                        <td><a th:text="${client.name}" th:href="@{/client/getOne/{id}(id=${client.id})}">Test</a></td>
+                        <td th:switch="${client.gender}">
+                            <span th:case="M">男生</span>
+                            <span th:case="F">女生</span>
+                            <span th:case="*">陰陽人</span>
+                        </td>
+                        <td th:text="${client.age}">99</td>
+                        <td th:text="${client.email}">xxx@gmail.com</td>
+                        <td><a th:href="@{/client/{id}/input(id=${client.id})}" class="btn btn-primary">修改</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

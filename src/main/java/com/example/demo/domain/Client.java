@@ -78,4 +78,16 @@ public class Client {
     public void setAge(int age) {
         this.age = age;
     }
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", gender='" + gender + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", age=" + age +
+                '}';
+    }
 }

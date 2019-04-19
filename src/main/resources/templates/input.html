@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}">title</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}" href="../static/css/bootstrap.css">
+    <script th:src="@{/js/bootstrap.js}" src="../static/js/bootstrap.js"></script>
+</head>
+<body>
+    <div class="container" style="margin-top: 50px; max-width: 800px;">
+        <div class="card">
+            <div class="card-header">新增用戶</div>
+            <div class="card-body" th:object="${client}">
+                <form action="#" th:action="@{/client/save}" method="post">
+                    <input type="hidden" name="id" th:value="*{id}">
+                    <div class="form-group">
+                        <label for="name">用戶名</label>
+                        <input type="text" name="name" class="form-control" id="name" th:field="*{name}">
+                    </div>
+                    <div class="form-group">
+                        <label for="emain">Email</label>
+                        <input type="email" name="email" class="form-control" id="emain" th:field="*{email}">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">密碼</label>
+                        <input type="text" name="password" class="form-control" id="password" th:field="*{password}">
+                    </div>
+                    <div class="form-group">
+                        <label for="age">年齡</label>
+                        <input type="text" class="form-control" id="age" name="age" th:field="*{age}">
+                    </div>
+                    <div class="form-group">
+                        <label for="gender_m">男生</label>
+                        <input type="radio" id="gender_m" name="gender" value="M" th:checked="(*{gender == 'M'})">
+                        &nbsp;
+                        <label for="gender_f">女生</label>
+                        <input type="radio" id="gender_f" name="gender" value="F" th:checked="(*{gender == 'F'})">
+                    </div>
+                    <p class="text-center">
+                        <button class="btn btn-primary" type="submit">提交</button>
+                    </p>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+</body>
+</html>

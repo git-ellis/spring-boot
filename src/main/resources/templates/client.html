@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}">title</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}" href="../static/css/bootstrap.css">
+    <script th:src="@{/js/bootstrap.js}" src="../static/js/bootstrap.js"></script>
+</head>
+<body>
+<div class="container" style="margin-top: 50px;">
+    <div class="card" th:object="${client}"> <!-- 在此div底下都可以用*{}訪問屬性 -->
+        <div class="card-header">測試</div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+<!--                    <th>Password</th>-->
+                    <th>Gender</th>
+                    <th>age</th>
+                    <th>Email</th>
+                </tr>
+                <tr>
+                    <td th:text="${client.id}">999</td>
+                    <td th:text="*{name}">Test</td>
+<!--                    <td th:text="*{password}">PASSWORD</td>-->
+                    <td th:switch="*{gender}">
+                        <span th:case="F">女生</span>
+                        <span th:case="M">男生</span>
+                    </td>
+                    <td th:text="*{age}"></td>
+                    <td th:text="*{email}">xxx@gmail.com</td>
+                </tr>
+            </table>
+        </div>
+        <div class="alert alert-success" role="alert" th:if="*{age >- 20 && age < 30}">
+            <strong>年輕人</strong>
+        </div>
+        <div class="alert alert-primary" role="alert" th:if="*{age >= 30 && age <= 40}">
+            <strong>成年人</strong>
+        </div>
+        <div class="alert alert-warning" role="alert" th:unless="*{age <= 40}"> <!-- if 的相反 -->
+            <strong>中年人</strong>
+        </div>
+    </div>
+    <a class="btn btn-primary" href="javascript:history.go(-1);" >返回</a>
+</div>
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+</html>

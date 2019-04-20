@@ -3,6 +3,7 @@ package com.example.demo.web;
 import com.example.demo.domain.Client;
 import com.example.demo.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,6 +18,12 @@ public class ClientRestController {
     @GetMapping("/client")
     public List<Client> findAll() {
         return cs.findAll();
+    }
+
+    @GetMapping("/page/client")
+    public Page<Client> findAll(@RequestParam int page, @RequestParam int size) {
+        String sortBy = "id";
+        return cs.findByPage(page, size, sortBy);
     }
 
     @GetMapping("/client/{id}")

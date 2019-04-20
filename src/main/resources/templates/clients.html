@@ -46,7 +46,7 @@
                      first/last (true/false)
                  -->
                 <tbody>
-                    <tr th:each="client,iterStat:${clients}"
+                    <tr th:each="client,iterStat:${page.content}"
                         th:class="${iterStat.even} ? bg-success : bg-light">
                         <td th:text="${client.id}">1</td>
                         <!--                            <td><a th:text="${client.name}" th:href="@{'/client/getOne/' + ${client.id}}">Test</a></td>-->
@@ -58,11 +58,25 @@
                         </td>
                         <td th:text="${client.age}">99</td>
                         <td th:text="${client.email}">xxx@gmail.com</td>
-                        <td><a th:href="@{/client/{id}/input(id=${client.id})}" class="btn btn-primary">修改</a></td>
+                        <td>
+                            <a th:href="@{/client/{id}/input(id=${client.id})}" class="btn btn-primary">修改</a>
+                            <a th:href="@{/client/{id}/delete(id=${client.id})}" class="btn btn-primary">刪除</a>
+                        </td>
                     </tr>
                 </tbody>
             </table>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item previous">
+                        <a class="page-link" th:unless="${page.isFirst()}"
+                           th:href="@{'/client/getAll?page=' + ${page.number - 1}}">Previous</a></li>
+                    <li class="page-item next">
+                        <a class="page-link" th:unless="${page.isLast()}"
+                           th:href="@{/client/getAll(page=${page.number + 1})}">Next</a></li>
+                </ul>
+            </nav>
         </div>
+
     </div>
 </div>
 </body>

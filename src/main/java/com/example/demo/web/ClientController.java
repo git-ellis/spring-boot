@@ -3,16 +3,15 @@ package com.example.demo.web;
 import com.example.demo.domain.Client;
 import com.example.demo.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/client")
@@ -25,15 +24,16 @@ public class ClientController {
     public String getOne(@PathVariable long id, Model model) {
         Client client = cs.findById(id);
         model.addAttribute("client", client);
-        model.addAttribute("title", "查詢單個用戶");
+        model.addAttribute("title", "客戶資料");
         return "client";
     }
 
     @GetMapping("/getAll")
-    public String getOne(ModelMap model) {
-        List<Client> clients = cs.findAll();
-        model.addAttribute("clients", clients);
-        model.addAttribute("title", "查詢多個用戶");
+    public String getAll(@PageableDefault(size = 5, sort = {"id"}, direction = Sort.Direction.ASC) Pageable pageable,
+                         ModelMap model) {
+        Page<Client> pageData = cs.findByPage(pageable);
+        model.addAttribute("page", pageData);
+        model.addAttribute("title", "客戶列表");
 
         return "clients";
     }
@@ -49,20 +49,29 @@ public class ClientController {
     public String showInputPage(@PathVariable long id, Model model) {
         Client client = cs.findById(id);
         model.addAttribute("client", client);
-        System.out.println(client);
         return "input";
     }
 
     @PostMapping("/save")
     public String addClient(Client client, RedirectAttributes ra) {
         long id = client.getId();
-        Client c = cs.save(client);
+        cs.save(client);
+
         if (id == 0)
             ra.addFlashAttribute("opTitle", "新增用戶");
         else
             ra.addFlashAttribute("opTitle", "修改用戶");
         ra.addFlashAttribute("opMsg", client.getName() + "成功");
-
         return "redirect:getAll"; // 會自動加前墜
+    }
+
+    @GetMapping("/{id}/delete")
+    public String delete(@PathVariable long id, RedirectAttributes ra) {
+        Client client = cs.findById(id);
+        cs.delete(id);
+
+        ra.addFlashAttribute("opTitle", "刪除用戶");
+        ra.addFlashAttribute("opMsg", client.getName() + "成功");
+        return "redirect:/client/getAll";
     }
 }

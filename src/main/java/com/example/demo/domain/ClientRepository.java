@@ -1,5 +1,7 @@
 package com.example.demo.domain;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -10,6 +12,8 @@ import java.util.List;
 
 @Repository
 public interface ClientRepository extends JpaRepository<Client, Long> {
+    Page<Client> findAll(Pageable pageable);
+
     List<Client> findByName(String name);
 
     List<Client> findByGenderAndAgeLessThanEqual(String gender, int age);
